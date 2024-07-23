@@ -143,6 +143,8 @@ public class YourCartPage extends AbstractComponent {
 		return new CheckoutPage(driver);
 
 	}
+	
+	
 
 	@Step("Check whether the product: {0} in a shopping cart")
 	public boolean isProductInShoppingCart(String product) {
