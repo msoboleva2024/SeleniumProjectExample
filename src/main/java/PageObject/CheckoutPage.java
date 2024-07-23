@@ -1,11 +1,15 @@
 package PageObject;
 
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import AbstractComponent.AbstractComponent;
+import Resources.Product;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 
@@ -43,20 +47,55 @@ public class CheckoutPage extends AbstractComponent {
 	@FindBy (id = "finish")
 	WebElement finishBtn;
 	
-	@FindBy (id = "checkout_complete_container")
+	@FindBy (css = "#checkout_complete_container h2")
 	WebElement checkoutInfo;
+	
+	@FindBy (css = "#checkout_complete_container .complete-text")
+	WebElement checkoutInfoText;
 	
 	@FindBy (id = "back-to-products")
 	WebElement backHomeBtn;
 	
+	@FindBy (css = ".error-message-container.error h3")
+	WebElement errorMsg;
+	
+	@FindBy (xpath = "//*[local-name()='svg']/parent::div/input")
+	List<WebElement> redCircle;
 	
 	@Step("Get final info about placed order")
 	public String getInfoAboutOrder() {
 		
 		waitVisibilityOfWebElement(checkoutInfo);
 		String info = checkoutInfo.getText();
-		Allure.addAttachment("Get final info about placed order: ", info);
-		return info;
+		String text = checkoutInfoText.getText();
+		Allure.addAttachment("Get final info about placed order: ", info+" "+text);
+		return info+" "+ text;
+		
+	}
+	
+	@Step("Check whether the error message displayed")
+	public boolean isErrorShown() {
+		
+		Boolean isErrorShown=false;
+		
+		try {
+			waitVisibilityOfWebElement(errorMsg);
+			isErrorShown = true;
+		}catch(Exception e) {
+			
+		}
+		Allure.addAttachment("Is error shown: ", isErrorShown.toString());
+		return isErrorShown;
+	}
+	
+	@Step("Get error text from checkout page")
+	public String getErrorMessageText() {
+		
+		String errorMessage="";
+		
+		errorMessage = errorMsg.getText();
+		Allure.addAttachment("The follwoing error occured: ", errorMessage);
+		return errorMessage;
 		
 	}
 	
@@ -115,6 +154,38 @@ public class CheckoutPage extends AbstractComponent {
 		
 	}
 	
+	@Step("get subtitle of Checkout page")
+	public String getPageSubtitle() {
+		
+		String subtitle  = "";
+		subtitle = driver.findElement(By.cssSelector("span[class='title']")).getText();
+		Allure.addAttachment("Checkout page subtitle", subtitle);
+		return subtitle;
+	}
+	
+	
+    @Step("Check whether the redCircle appeared near field with error")
+    public boolean isRedCircleAppeared(String fieldName) {
+    	
+    	Boolean isAppeared = false;
+    	
+    	for (int i=0;i<redCircle.size();i++) {
+    		
+    		if(redCircle.get(i).getAttribute("name").contains(fieldName))
+    			{
+    			isAppeared = true;
+    			
+    			break;
+    			}		
+    	}
+    	
+
+		Allure.addAttachment("The red circle appeared near field: ", isAppeared.toString());
+    	return isAppeared;
+    	
+    	
+    	
+    }
 	@Step("Click Cancel btn on the 'Checkout' Page")
 	public void clickCancel() {
 		
@@ -122,6 +193,45 @@ public class CheckoutPage extends AbstractComponent {
 		cancelBtn.click();
 	}
 	
+	@Step("Check orders details {0}")
+	public Boolean checkProductsInOrder(List<Product> products) {
+		
+		Boolean isOk = false;
+		int counter = 0;
+		
+		List<WebElement> cartItems = driver.findElements(By.className("cart_item"));
+		
+		if (cartItems.size()==products.size()) {
+			
+			for(int i=0;i<cartItems.size();i++) {
+				
+				for (int j=0;j<products.size();j++) {
+			
+					if (cartItems.get(i).findElement(By.className("inventory_item_name")).getText().equals(products.get(j).getName())
+							&&cartItems.get(i).findElement(By.className("inventory_item_desc")).getText().equals(products.get(j).getDescription())
+							&&cartItems.get(i).findElement(By.className("item_pricebar")).getText().equals(products.get(j).getPrice()))
+						      
+						        counter = counter+1;
+						
+				}
+			}	
+			
+		}
+		
+		else {
+			
+			Allure.addAttachment("The number of elements in order is another from expected value: ", String.valueOf(cartItems.size()));
+			return isOk;
+			
+		}
+		
+		if (counter==products.size())
+			
+			isOk=true;
+		
+		Allure.addAttachment("The products from the list are presented in the Order with valid names, prices and descriptions", isOk.toString());
+		return isOk;
+	}
 	
 	
 
