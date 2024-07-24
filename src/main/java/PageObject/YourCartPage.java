@@ -47,7 +47,7 @@ public class YourCartPage extends AbstractComponent {
 	@FindBy(id = "back-to-products")
 	WebElement backToProductsBtn;
 
-	@FindBy(css = "[class*='inventory_details_desc']")
+	@FindBy(css = ".inventory_details_desc.large_size")
 	WebElement descriptionOfProduct;
 
 	@Step("Delete product from Detailed view page")
@@ -136,11 +136,11 @@ public class YourCartPage extends AbstractComponent {
 	}
 
 	@Step("Click 'Checkout' btn to finalize the order")
-	public CheckoutPage clickCheckoutBtn() {
+	public Checkout_YourInformationPage clickCheckoutBtn() {
 
 		waitVisibilityOfWebElement(checkoutBtn);
 		checkoutBtn.click();
-		return new CheckoutPage(driver);
+		return new Checkout_YourInformationPage(driver);
 
 	}
 	
