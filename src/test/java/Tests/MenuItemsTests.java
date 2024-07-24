@@ -129,5 +129,19 @@ public class MenuItemsTests extends BaseTest {
                 softAssert.assertFalse(productsPage.isRemoveBtnPresentedForProduct(productToBeOrdered));
 				softAssert.assertAll();
 	}
+	
+	
+	@Epic("SauceDemo Application")
+	@Feature("Menu Items for all pages")
+	@Test(priority = 0, description = "Check links in the bottom of Product page")
+	@Description("Test-case will check that links on ProductPage are not broken")
+	public void checkLinks() {
+				
+			Assert.assertFalse(productsPage.areLinksBroken());	
+		
+
+	}
+	
+	
 
 }

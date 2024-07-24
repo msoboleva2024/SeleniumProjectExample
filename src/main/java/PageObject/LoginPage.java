@@ -4,8 +4,10 @@ package PageObject;
 import java.util.Arrays;
 import java.util.List;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -68,6 +70,14 @@ public class LoginPage extends AbstractComponent {
 		return new ProductsPage(driver);
 	}
 	
+	@Step("Click ENTER instead of click on LoginButton to login to the application")
+	public ProductsPage clickENTERToLogin() {
+		
+		
+		Actions action = new Actions(driver);
+		action.moveToElement(passwordFld).sendKeys(Keys.ENTER).build().perform();
+		return new ProductsPage(driver);
+	}
 	@Step("Get users for test")
 	public List<String> getTestUsers() {
 			

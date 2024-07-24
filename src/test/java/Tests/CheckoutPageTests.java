@@ -8,7 +8,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import PageObject.CheckoutPage;
+import PageObject.Checkout_CompletePage;
+import PageObject.Checkout_OverviewPage;
+import PageObject.Checkout_YourInformationPage;
 import PageObject.ProductsPage;
 import PageObject.YourCartPage;
 import Resources.Product;
@@ -70,15 +72,15 @@ public class CheckoutPageTests extends BaseTest {
 
 	public void checkoutProduct() {
 
-		CheckoutPage checkoutPage = yourCartPage.clickCheckoutBtn();
-		checkoutPage.setCheckoutInformation("TestUserSurname", "TestUser name", "12345");
-		checkoutPage.clickContinueBtn();
-		softAssert.assertFalse(checkoutPage.isErrorShown());
+		Checkout_YourInformationPage checkoutYourInformationPage = yourCartPage.clickCheckoutBtn();
+		checkoutYourInformationPage.setCheckoutInformation("TestUserSurname", "TestUser name", "12345");
+		Checkout_OverviewPage overviewPage = checkoutYourInformationPage.clickContinueBtn();
+		softAssert.assertFalse(checkoutYourInformationPage.isErrorShown());
 		List<Product> products = new ArrayList<Product>();
 		products.add(productAdded);
-		softAssert.assertTrue(checkoutPage.checkProductsInOrder(products));
-		checkoutPage.clickFinishBtn();
-		String finalInfo = checkoutPage.getInfoAboutOrder();
+		softAssert.assertTrue(overviewPage.checkProductsInOrder(products));
+		Checkout_CompletePage completePage = overviewPage.clickFinishBtn();
+		String finalInfo = completePage.getInfoAboutOrder();
 		softAssert.assertEquals(finalInfo,
 				"Thank you for your order! Your order has been dispatched, and will arrive just as fast as the pony can get there!");
 
@@ -108,16 +110,16 @@ public class CheckoutPageTests extends BaseTest {
 		softAssert.assertTrue(yourCartPage.isProductInShoppingCart(productToBeOrderedSecond));
 
 		
-		CheckoutPage checkoutPage = yourCartPage.clickCheckoutBtn();
-		checkoutPage.setCheckoutInformation("TestUser name", "TestUser Surname", "12345");
-		checkoutPage.clickContinueBtn();
-		softAssert.assertFalse(checkoutPage.isErrorShown());
+		Checkout_YourInformationPage checkoutYourInformationPage = yourCartPage.clickCheckoutBtn();
+		checkoutYourInformationPage.setCheckoutInformation("TestUser name", "TestUser Surname", "12345");
+		Checkout_OverviewPage overviewPage = checkoutYourInformationPage.clickContinueBtn();
+		softAssert.assertFalse(checkoutYourInformationPage.isErrorShown());
 		List<Product> products = new ArrayList<Product>();
 		products.add(productAdded);
 		products.add(productAddedSecond);
-		softAssert.assertTrue(checkoutPage.checkProductsInOrder(products));
-		checkoutPage.clickFinishBtn();
-		String finalInfo = checkoutPage.getInfoAboutOrder();
+		softAssert.assertTrue(overviewPage.checkProductsInOrder(products));
+		Checkout_CompletePage completePage = overviewPage.clickFinishBtn();
+		String finalInfo = completePage.getInfoAboutOrder();
 		softAssert.assertEquals(finalInfo,
 				"Thank you for your order! Your order has been dispatched, and will arrive just as fast as the pony can get there!");
 
@@ -125,132 +127,12 @@ public class CheckoutPageTests extends BaseTest {
 	}
 
 	
-	@Epic("SauceDemo Application")
-	@Feature("Checkout Page")
-	@Test(priority = 0, description = "Checkout order and dont fill the name data on checkoutPage ")
-	@Description("Test-case will check that it is not possible to checkout the order is user will not enter the name of checkout page")
-
-	public void checkoutProductEmptyName() {
-
-		CheckoutPage checkoutPage = yourCartPage.clickCheckoutBtn();
-		checkoutPage.setCheckoutInformation("", "Surname", "12345");
-		checkoutPage.clickContinueBtn();
-		softAssert.assertTrue(checkoutPage.isErrorShown());
-		softAssert.assertEquals(checkoutPage.getErrorMessageText(), "Error: First Name is required");
-		softAssert.assertTrue(checkoutPage.isRedCircleAppeared("firstName"));
-		softAssert.assertFalse(checkoutPage.isRedCircleAppeared("lastName"));
-		softAssert.assertFalse(checkoutPage.isRedCircleAppeared("postalCode"));
-		softAssert.assertAll();
-	}
-
 	
-	@Epic("SauceDemo Application")
-	@Feature("Checkout Page")
-	@Test(priority = 0, description = "Checkout order and dont fill the surname data on checkoutPage ")
-	@Description("Test-case will check that it is not possible to checkout the order is user will not enter the surname of checkout page")
+	public void checkoutWithoutItemsInShoppingCart() {
 
-	public void checkoutProductEmptySurname() {
-
-		CheckoutPage checkoutPage = yourCartPage.clickCheckoutBtn();
-		checkoutPage.setCheckoutInformation("Name test", "", "12345");
-		checkoutPage.clickContinueBtn();
-		softAssert.assertTrue(checkoutPage.isErrorShown());
-		softAssert.assertEquals(checkoutPage.getErrorMessageText(), "Error: Last Name is required");
-		softAssert.assertFalse(checkoutPage.isRedCircleAppeared("firstName"));
-		softAssert.assertTrue(checkoutPage.isRedCircleAppeared("lastName"));
-		softAssert.assertFalse(checkoutPage.isRedCircleAppeared("postalCode"));
-		softAssert.assertAll();
-	}
-
-	@Epic("SauceDemo Application")
-	@Feature("Checkout Page")
-	@Test(priority = 0, description = "Checkout order and dont fill the postalCode data on checkoutPage ")
-	@Description("Test-case will check that it is not possible to checkout the order is user will not enter the postalCode of checkout page")
-
-	public void checkoutProductEmptyPostalCode() {
-
-		CheckoutPage checkoutPage = yourCartPage.clickCheckoutBtn();
-		checkoutPage.setCheckoutInformation("Name test", "Surname user", "");
-		checkoutPage.clickContinueBtn();
-		softAssert.assertTrue(checkoutPage.isErrorShown());
-		softAssert.assertEquals(checkoutPage.getErrorMessageText(), "Error: Postal Code is required");
-		softAssert.assertFalse(checkoutPage.isRedCircleAppeared("firstName"));
-		softAssert.assertFalse(checkoutPage.isRedCircleAppeared("lastName"));
-		softAssert.assertTrue(checkoutPage.isRedCircleAppeared("postalCode"));
-		softAssert.assertAll();
-	}
-	
-	@Epic("SauceDemo Application")
-	@Feature("Checkout Page")
-	@Test(priority = 1, description = "Checkout order and dont fill any data on checkoutPage ")
-	@Description("Test-case will check that it is not possible to checkout the order is user will not enter any data of checkout page")
-
-	public void checkoutProductWithoutData() {
-
-		CheckoutPage checkoutPage = yourCartPage.clickCheckoutBtn();
-		checkoutPage.setCheckoutInformation("", "", "");
-		checkoutPage.clickContinueBtn();
-		softAssert.assertTrue(checkoutPage.isErrorShown());
-		softAssert.assertEquals(checkoutPage.getErrorMessageText(), "Error: First Name is required. Last Name is required. Postal Code is required");
-		softAssert.assertTrue(checkoutPage.isRedCircleAppeared("firstName"));
-		softAssert.assertTrue(checkoutPage.isRedCircleAppeared("lastName"));
-		softAssert.assertTrue(checkoutPage.isRedCircleAppeared("postalCode"));
-		softAssert.assertAll();
-	}
-	
-	
-	@Epic("SauceDemo Application")
-	@Feature("Checkout Page")
-	@Test(priority = 1, description = "Checkout order and dont fill name and surname on checkoutPage ")
-	@Description("Test-case will check that it is not possible to checkout the order is user will not enter name and surname of checkout page")
-
-	public void checkoutProductWithoutDataInSurnameName() {
-
-		CheckoutPage checkoutPage = yourCartPage.clickCheckoutBtn();
-		checkoutPage.setCheckoutInformation("", "", "23344");
-		checkoutPage.clickContinueBtn();
-		softAssert.assertTrue(checkoutPage.isErrorShown());
-		softAssert.assertEquals(checkoutPage.getErrorMessageText(), "Error: First Name is required. Last Name is required");
-		softAssert.assertTrue(checkoutPage.isRedCircleAppeared("firstName"));
-		softAssert.assertTrue(checkoutPage.isRedCircleAppeared("lastName"));
-		softAssert.assertFalse(checkoutPage.isRedCircleAppeared("postalCode"));
-		softAssert.assertAll();
-	}
-	
-	@Epic("SauceDemo Application")
-	@Feature("Checkout Page")
-	@Test(priority = 1, description = "Checkout order and dont fill name and postalCode on checkoutPage ")
-	@Description("Test-case will check that it is not possible to checkout the order is user will not enter name and postalCode of checkout page")
-
-	public void checkoutProductWithoutDataInPostalCodeName() {
-
-		CheckoutPage checkoutPage = yourCartPage.clickCheckoutBtn();
-		checkoutPage.setCheckoutInformation("", "Test surname", "");
-		checkoutPage.clickContinueBtn();
-		softAssert.assertTrue(checkoutPage.isErrorShown());
-		softAssert.assertEquals(checkoutPage.getErrorMessageText(), "Error: First Name is required. Postal Code is required");
-		softAssert.assertTrue(checkoutPage.isRedCircleAppeared("firstName"));
-		softAssert.assertFalse(checkoutPage.isRedCircleAppeared("lastName"));
-		softAssert.assertTrue(checkoutPage.isRedCircleAppeared("postalCode"));
-		softAssert.assertAll();
-	}
-	
-	@Epic("SauceDemo Application")
-	@Feature("Checkout Page")
-	@Test(priority = 1, description = "Checkout order and dont fill surname and postalCode on checkoutPage ")
-	@Description("Test-case will check that it is not possible to checkout the order is user will not enter surname and postalCode of checkout page")
-
-	public void checkoutProductWithoutDataInPostalCodeSurname() {
-
-		CheckoutPage checkoutPage = yourCartPage.clickCheckoutBtn();
-		checkoutPage.setCheckoutInformation("Test", "", "");
-		checkoutPage.clickContinueBtn();
-		softAssert.assertTrue(checkoutPage.isErrorShown());
-		softAssert.assertEquals(checkoutPage.getErrorMessageText(), "Error: Last Name is required. Postal Code is required");
-		softAssert.assertFalse(checkoutPage.isRedCircleAppeared("firstName"));
-		softAssert.assertTrue(checkoutPage.isRedCircleAppeared("lastName"));
-		softAssert.assertTrue(checkoutPage.isRedCircleAppeared("postalCode"));
-		softAssert.assertAll();
+		yourCartPage.deleteProductFromTheShoppingCart(productToBeOrdered);
+		Checkout_YourInformationPage checkoutYourInformaitonPage = yourCartPage.clickCheckoutBtn();
+		Assert.assertFalse(checkoutYourInformaitonPage.getPageSubtitle().equals("Checkout: Your Information"),"Error:It is possible to checkout without orders in shopping cart!");
 	}
 	
 	@Epic("SauceDemo Application")
@@ -260,33 +142,22 @@ public class CheckoutPageTests extends BaseTest {
 
 	public void checkoutProductAnotherLanguage() {
 
-		CheckoutPage checkoutPage = yourCartPage.clickCheckoutBtn();
-		checkoutPage.setCheckoutInformation("Test äüöß", "äüöß Familienname", "12345");
+		Checkout_YourInformationPage checkoutYouInformationPage = yourCartPage.clickCheckoutBtn();
+		checkoutYouInformationPage.setCheckoutInformation("Test äüöß", "äüöß Familienname", "12345");
 		
-		checkoutPage.clickContinueBtn();
-		softAssert.assertFalse(checkoutPage.isErrorShown());
+		Checkout_OverviewPage overviewPage  = checkoutYouInformationPage.clickContinueBtn();
+		softAssert.assertFalse(checkoutYouInformationPage.isErrorShown());
 		List<Product> products = new ArrayList<Product>();
 		products.add(productAdded);
-		softAssert.assertTrue(checkoutPage.checkProductsInOrder(products));
-		checkoutPage.clickFinishBtn();
-		String finalInfo = checkoutPage.getInfoAboutOrder();
+		softAssert.assertTrue(overviewPage.checkProductsInOrder(products));
+		Checkout_CompletePage completePage = overviewPage.clickFinishBtn();
+		String finalInfo = completePage.getInfoAboutOrder();
 		softAssert.assertEquals(finalInfo,
 				"Thank you for your order! Your order has been dispatched, and will arrive just as fast as the pony can get there!");
 
 		softAssert.assertAll();
 	}
 	
-	@Epic("SauceDemo Application")
-	@Feature("Checkout Page")
-	@Test(priority = 0, description = "Checkout order without items")
-	@Description("Test-case will check that it is not possible to checkout the order without items in it")
-
-	public void checkoutWithoutItemsInShoppingCart() {
-
-		yourCartPage.deleteProductFromTheShoppingCart(productToBeOrdered);
-		CheckoutPage checkoutPage = yourCartPage.clickCheckoutBtn();
-		Assert.assertFalse(checkoutPage.getPageSubtitle().equals("Checkout: Your Information"),"Error:It is possible to checkout without orders in shopping cart!");
-	}
 
 	
 

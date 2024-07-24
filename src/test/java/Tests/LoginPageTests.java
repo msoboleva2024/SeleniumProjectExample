@@ -229,8 +229,27 @@ public class LoginPageTests extends BaseTest {
 
 	}
 
-	
-	
+	@Epic("SauceDemo Application")
+	@Feature("Login Page")
+	@Test(priority = 2, description = "Login to application with pressing of Enter btn instead of Login Btn click")
+	@Description("Test-case will check that it is possibletologinto applicatin if user will click 'ENTER' instead of LoginBtn.")
 
+	public void loginWithEnterInsteadOfLoginBtn() {
+
+		// preconditions: get test-data
+				List<String> users = loginPage.getTestUsers();
+				String password = loginPage.getTestPassword();
+
+				// login to application
+				loginPage.setUsername(users.get(0));
+				System.out.println("The following User was used for the login: " + users.get(0));
+				loginPage.setPassword(password);
+				System.out.println("The following Password was used for the login: " + password);
+		
+				ProductsPage productsPage = loginPage.clickENTERToLogin();
+				// check expected results
+				Assert.assertEquals(productsPage.getPageTitle(), "Products");
+	
+	}
 }
 
