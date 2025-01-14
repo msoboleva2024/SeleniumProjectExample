@@ -206,12 +206,6 @@ public class Checkout_OverviewPage extends AbstractComponent {
 			return null;
 }
 
-    //branch1 - commit One 17:11
-	//branch2 - commit Two 17:13
-    //branch1 - commit Three 17:15
-	//branch3  - commit Four 17:27
-	//branch4 - commit Five 17:39
-	//branch4 - commit Six 17:41
-	//branch5 - commit Seven 17:44
-	//branch5 - commit Eight 17:45
+    //delete all comments branch6 - 17:53
+
 }
