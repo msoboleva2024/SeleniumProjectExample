@@ -1,17 +1,16 @@
 package PageObject;
 
-import java.util.List;
-
+import AbstractComponent.AbstractComponent;
+import Resources.Product;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import AbstractComponent.AbstractComponent;
-import Resources.Product;
-import io.qameta.allure.Allure;
-import io.qameta.allure.Step;
+import java.util.List;
 
 public class Checkout_OverviewPage extends AbstractComponent {
 
@@ -206,4 +205,6 @@ public class Checkout_OverviewPage extends AbstractComponent {
 			}
 			return null;
 }
+
+//some changes to test commits
 }
