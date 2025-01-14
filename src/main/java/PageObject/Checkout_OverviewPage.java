@@ -207,4 +207,5 @@ public class Checkout_OverviewPage extends AbstractComponent {
 }
 
 //some changes to test commits
+	//one more comment to commit
 }
