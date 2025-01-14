@@ -211,5 +211,5 @@ public class Checkout_OverviewPage extends AbstractComponent {
     //branch1 - commit Three 17:15
 	//branch3  - commit Four 17:27
 	//branch4 - commit Five 17:39
-	
+	//branch4 - commit Six 17:41
 }
