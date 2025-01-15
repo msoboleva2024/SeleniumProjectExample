@@ -192,7 +192,7 @@ public class Checkout_OverviewPage extends AbstractComponent {
 		
 		List<WebElement> cartItems = driver.findElements(By.className("cart_item"));
 	
-			
+			// added second comment - afterMorningBranch - 08:37
 			for(int i=0;i<cartItems.size();i++) {
 			
 					if (cartItems.get(i).findElement(By.className("inventory_item_name")).getText().equals(product))
