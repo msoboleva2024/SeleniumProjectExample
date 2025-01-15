@@ -184,7 +184,7 @@ public class Checkout_OverviewPage extends AbstractComponent {
 		return isOk;
 	}
 	
-	
+	//AfterMorningBranch comment - 08:35
 	@Step("Open Details for Product {0}")
 	public YourCartPage clickOnProductForDetailedView(String product) {
 		
@@ -201,7 +201,7 @@ public class Checkout_OverviewPage extends AbstractComponent {
 						cartItems.get(i).findElement(By.className("inventory_item_name")).click();
 						return new YourCartPage(driver);
 						}
-					
+					//secondComment - AfterMorningBranch 08:38
 			}
 			return null;
 }
