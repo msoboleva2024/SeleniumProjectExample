@@ -59,4 +59,5 @@ public class Checkout_YourCartPage extends AbstractComponent {
 	}
 	
 //branch3 - added new comment to YourCartPage - 09:04
+	//branch3 -added 2 comment - 09:06
 }
