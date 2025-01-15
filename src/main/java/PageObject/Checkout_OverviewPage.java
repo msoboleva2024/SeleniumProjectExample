@@ -184,16 +184,14 @@ public class Checkout_OverviewPage extends AbstractComponent {
 		return isOk;
 	}
 	
-	//AfterMorningBranch comment - 08:35
+
 	@Step("Open Details for Product {0}")
 	public YourCartPage clickOnProductForDetailedView(String product) {
 		
-	//This is branch 2 to test rebase - first commit - 08:57
-		//Added one more comment to branch2 - 08:58
-		
+
 		List<WebElement> cartItems = driver.findElements(By.className("cart_item"));
 	
-			// added second comment - afterMorningBranch - 08:37
+
 			for(int i=0;i<cartItems.size();i++) {
 			
 					if (cartItems.get(i).findElement(By.className("inventory_item_name")).getText().equals(product))
@@ -202,13 +200,9 @@ public class Checkout_OverviewPage extends AbstractComponent {
 						cartItems.get(i).findElement(By.className("inventory_item_name")).click();
 						return new YourCartPage(driver);
 						}
-					//secondComment - AfterMorningBranch 08:38
+
 			}
 			return null;
 }
-//deleted all comments - morningBranch 08-29
 
-	//new branch1 to test rebase feature - 08:56
-
-	//one more comment branch1 - 8: 58
 }

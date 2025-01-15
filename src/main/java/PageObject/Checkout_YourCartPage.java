@@ -58,5 +58,5 @@ public class Checkout_YourCartPage extends AbstractComponent {
 		return subtitle;
 	}
 	
-
+//branch3 - added new comment to YourCartPage - 09:04
 }
