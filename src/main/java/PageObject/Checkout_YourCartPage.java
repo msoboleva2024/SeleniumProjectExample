@@ -48,7 +48,7 @@ public class Checkout_YourCartPage extends AbstractComponent {
 		
 	}
 
-	
+	//New comment branch4    - 09:05
 	@Step("get subtitle of Checkout page")
 	public String getPageSubtitle() {
 		
