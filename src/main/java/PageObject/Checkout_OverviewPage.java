@@ -205,8 +205,5 @@ public class Checkout_OverviewPage extends AbstractComponent {
 			}
 			return null;
 }
-
-    //delete all comments branch6 - 17:53
-	//one more comment branch6 -17:56
-
+//deleted all comments - morningBranch 08-29
 }
