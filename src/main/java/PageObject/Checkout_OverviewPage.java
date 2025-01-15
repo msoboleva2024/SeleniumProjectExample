@@ -188,7 +188,8 @@ public class Checkout_OverviewPage extends AbstractComponent {
 	@Step("Open Details for Product {0}")
 	public YourCartPage clickOnProductForDetailedView(String product) {
 		
-	
+	//This is branch 2 to test rebase - first commit - 08:57
+		//Added one more comment to branch2 - 08:58
 		
 		List<WebElement> cartItems = driver.findElements(By.className("cart_item"));
 	
