@@ -208,4 +208,6 @@ public class Checkout_OverviewPage extends AbstractComponent {
 //deleted all comments - morningBranch 08-29
 
 	//new branch1 to test rebase feature - 08:56
+
+	//one more comment branch1 - 8: 58
 }
